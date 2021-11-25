@@ -1,0 +1,168 @@
+RUN-INSTANCES()                                                RUN-INSTANCES()
+
+
+
+[1mNAME[0m
+       run-instances -
+
+[1mDESCRIPTION[0m
+       Launches  the  specified number of instances using an AMI for which you
+       have permissions.
+
+       You can specify a number of options, or leave the default options.  The
+       following rules apply:
+
+       +o [EC2-VPC]  If you don't specify a subnet ID, we choose a default sub-
+         net from your default VPC for you. If you don't have a  default  VPC,
+         you must specify a subnet ID in the request.
+
+       +o [EC2-Classic]  If  don't  specify an Availability Zone, we choose one
+         for you.
+
+       +o Some instance types must be launched into a VPC. If you do not have a
+         default VPC, or if you do not specify a subnet ID, the request fails.
+         For more information, see [4mInstance[24m [4mtypes[24m [4mavailable[24m [4monly[24m [4min[24m [4ma[24m [4mVPC[24m .
+
+       +o [EC2-VPC] All instances have a network interface with a primary  pri-
+         vate  IPv4  address. If you don't specify this address, we choose one
+         from the IPv4 range of your subnet.
+
+       +o Not all instance types support IPv6 addresses. For more  information,
+         see [4mInstance[24m [4mtypes[24m .
+
+       +o If you don't specify a security group ID, we use the default security
+         group. For more information, see [4mSecurity[24m [4mgroups[24m .
+
+       +o If any of the AMIs have a product code attached for  which  the  user
+         has not subscribed, the request fails.
+
+       You  can  create  a [4mlaunch[24m [4mtemplate[24m , which is a resource that contains
+       the parameters to launch an instance. When you launch an instance using
+       RunInstances  , you can specify the launch template instead of specify-
+       ing the launch parameters.
+
+       To ensure faster  instance  launches,  break  up  large  requests  into
+       smaller  batches. For example, create five separate launch requests for
+       100 instances each instead of one launch request for 500 instances.
+
+       An instance is ready for you to use when it's in the [1mrunning [22mstate. You
+       can check the state of your instance using  DescribeInstances . You can
+       tag instances and EBS volumes during launch, after launch, or both. For
+       more information, see  CreateTags and [4mTagging[24m [4myour[24m [4mAmazon[24m [4mEC2[24m [4mresources[0m
+       .
+
+       Linux instances have access to the public key of the key pair at  boot.
+       You  can  use this key to provide secure access to the instance. Amazon
+       EC2 public images use this feature to  provide  secure  access  without
+       passwords. For more information, see [4mKey[24m [4mpairs[24m .
+
+       For  troubleshooting,  see [4mWhat[24m [4mto[24m [4mdo[24m [4mif[24m [4man[24m [4minstance[24m [4mimmediately[24m [4mtermi-[0m
+       [4mnates[24m , and [4mTroubleshooting[24m [4mconnecting[24m [4mto[24m [4myour[24m [4minstance[24m .
+
+       See also: AWS API Documentation
+
+       See 'aws help' for descriptions of global parameters.
+
+[1mSYNOPSIS[0m
+            run-instances
+          [--block-device-mappings <value>]
+          [--image-id <value>]
+          [--instance-type <value>]
+          [--ipv6-address-count <value>]
+          [--ipv6-addresses <value>]
+          [--kernel-id <value>]
+          [--key-name <value>]
+          [--monitoring <value>]
+          [--placement <value>]
+          [--ramdisk-id <value>]
+          [--security-group-ids <value>]
+          [--security-groups <value>]
+          [--subnet-id <value>]
+          [--user-data <value>]
+          [--additional-info <value>]
+          [--client-token <value>]
+          [--disable-api-termination | --enable-api-termination]
+          [--dry-run | --no-dry-run]
+          [--ebs-optimized | --no-ebs-optimized]
+          [--iam-instance-profile <value>]
+          [--instance-initiated-shutdown-behavior <value>]
+          [--network-interfaces <value>]
+          [--private-ip-address <value>]
+          [--elastic-gpu-specification <value>]
+          [--elastic-inference-accelerators <value>]
+          [--tag-specifications <value>]
+          [--launch-template <value>]
+          [--instance-market-options <value>]
+          [--credit-specification <value>]
+          [--cpu-options <value>]
+          [--capacity-reservation-specification <value>]
+          [--hibernation-options <value>]
+          [--license-specifications <value>]
+          [--metadata-options <value>]
+          [--enclave-options <value>]
+          [--count <value>]
+          [--secondary-private-ip-addresses <value>]
+          [--secondary-private-ip-address-count <value>]
+          [--associate-public-ip-address | --no-associate-public-ip-address]
+          [--cli-input-json | --cli-input-yaml]
+          [--generate-cli-skeleton <value>]
+
+[1mOPTIONS[0m
+       [1m--block-device-mappings [22m(list)
+          The block device mapping, which defines the EBS volumes and instance
+          store volumes to attach to the instance at launch. For more informa-
+          tion, see [4mBlock[24m [4mdevice[24m [4mmappings[24m in the [4mAmazon[24m [4mEC2[24m [4mUser[24m [4mGuide[24m .
+
+          (structure)
+              Describes a block device mapping, which defines the EBS  volumes
+              and instance store volumes to attach to an instance at launch.
+
+              DeviceName -> (string)
+                 The device name (for example, [1m/dev/sdh [22mor [1mxvdh [22m).
+
+              VirtualName -> (string)
+                 The virtual device name ([1mephemeral [22mN). Instance store volumes
+                 are numbered starting from 0. An instance type with 2  avail-
+                 able   instance   store  volumes  can  specify  mappings  for
+                 [1mephemeral0 [22mand [1mephemeral1 [22m. The number of available  instance
+                 store volumes depends on the instance type. After you connect
+                 to the instance, you must mount the volume.
+
+                 NVMe instance store volumes are automatically enumerated  and
+                 assigned  a  device name. Including them in your block device
+                 mapping has no effect.
+
+                 Constraints: For M3  instances,  you  must  specify  instance
+                 store  volumes  in the block device mapping for the instance.
+                 When you launch an M3 instance, we ignore any instance  store
+                 volumes specified in the block device mapping for the AMI.
+
+              Ebs -> (structure)
+                 Parameters  used to automatically set up EBS volumes when the
+                 instance is launched.
+
+                 DeleteOnTermination -> (boolean)
+                     Indicates whether the EBS volume is deleted  on  instance
+                     termination.  For more information, see [4mPreserving[24m [4mAmazon[0m
+                     [4mEBS[24m [4mvolumes[24m [4mon[24m [4minstance[24m [4mtermination[24m  in  the  [4mAmazon[24m  [4mEC2[0m
+                     [4mUser[24m [4mGuide[24m .
+
+                 Iops -> (integer)
+                     The number of I/O operations per second (IOPS). For [1mgp3 [22m,
+                     [1mio1 [22m, and [1mio2 [22mvolumes, this represents the number of IOPS
+                     that  are  provisioned  for  the volume. For [1mgp2 [22mvolumes,
+                     this represents the baseline performance  of  the  volume
+                     and  the rate at which the volume accumulates I/O credits
+                     for bursting.
+
+                     The following are the supported values  for  each  volume
+                     type:
+
+                     +o [1mgp3 [22m: 3,000-16,000 IOPS
+
+                     +o [1mio1 [22m: 100-64,000 IOPS
+
+                     +o [1mio2 [22m: 100-64,000 IOPS
+
+                     For  [1mio1  [22mand  [1mio2 [22mvolumes, we guarantee 64,000 IOPS only
+                     for [4mInstances[24m [4mbuilt[24m [4mon[24m [4mthe[24m [4mN
