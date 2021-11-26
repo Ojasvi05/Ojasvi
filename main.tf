@@ -4,7 +4,7 @@ provider "aws" {
  secret_key ="94nK3wuzk+ynYBSsNYpRUwsk5Pto6hCDbIqUy/1f"
 	}
 	
-	resource "aws_instance" "server2" {
+	resource "aws_instance" "server" {
 	  ami           = "ami-0108d6a82a783b352"
 	  instance_type = "t2.medium"
 	  tags = {
